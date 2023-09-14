@@ -4,14 +4,14 @@ import { Card } from './components/ui/card';
 import { Input } from './components/ui/input';
 import { Textarea } from './components/ui/textarea';
 import { Label } from './components/ui/label';
+import LanguagePicker from './components/LanguagePicker';
 
 function App() {
 	const [cardSourceState, setCardSourceState] = useState<string>(lorem);
-	const [gptPromptState, setGptPromptState] = useState<string>(promptIntro);
-
+	const [languageState, setLanguageState] = useState<string>('english');
 	const prompt = useMemo(() => {
-		return `${gptPromptState} ${cardSourceState}`;
-	}, [gptPromptState, cardSourceState]);
+		return `${promptIntro} ${cardSourceState}`;
+	}, [cardSourceState]);
 
 	//TODO: SETUP A WAY FOR THE USER TO COPY THE PROMPT FOR CHAT GPT
 	//TODO: ADD ANOTHER TEXTAREA FOR THE USER TO PASTE THE GPT OUTPUT INTO
@@ -22,6 +22,7 @@ function App() {
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 			<div className="flex flex-col justify-center items-center min-h-[100vh] h-screen w-screen overflow-auto">
 				<Card className="flex flex-col justify-start items-center py-12 min-h-[50%] w-[50%] gap-4">
+					<LanguagePicker onChange={() => console.log('hello')} />
 					<Input
 						className="w-96 resize"
 						type="text"
@@ -52,13 +53,16 @@ export default App;
 const lorem =
 	"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
-const promptIntro = `You are a professional making flash cards from given text for educational purposes for schools, universities, professional trainings.
-Create as many flash cards as needed following these rules:
-
-- No duplicate cards!.
-- Only provide the json for the flash cards, do not say anything else in the text, the text will be ignored.
-- questions should have all the context necessary for answering it, (not "What was this period called?" but instead "What was the name of the period between 1939 and 1945?") because the flash cards will have no other context than the question.
-- Make global questions about the text when it makes sense
-- Don't invent anything, only use the text provided
-- Write in {language}
-`;
+function promptIntro(language: string = 'english') {
+	return `You are a professional making flashcards from given text for educational purposes for schools, universities, professional trainings.
+	Create as many flash cards as needed following these rules:
+	
+	- No duplicate cards!
+	- Only provide the json for the flashcards, do not say anything else in the text, the text will be ignored.
+	- questions should have all the context necessary for answering it, (not "What was this period called?" but instead "What was the name of the period between 1939 and 1945?") because the flash cards will have no other context than the question.
+	- Make global questions about the text when it makes sense
+	- Don't invent anything, only use the text provided
+	- Write in ${language}
+	
+	`;
+}
