@@ -9,41 +9,18 @@ import {
 	CommandInput,
 	CommandItem,
 } from '@/components/ui/command';
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import languageList from '@/utils/languageList';
 
-const frameworks = [
-	{
-		value: 'next.js',
-		label: 'Next.js',
-	},
-	{
-		value: 'sveltekit',
-		label: 'SvelteKit',
-	},
-	{
-		value: 'nuxt.js',
-		label: 'Nuxt.js',
-	},
-	{
-		value: 'remix',
-		label: 'Remix',
-	},
-	{
-		value: 'astro',
-		label: 'Astro',
-	},
-];
+const languages = languageList.sort((a, b) => a.value.localeCompare(b.value));
+
 type LanguagePickerProps = {
 	onChange: (language: string) => void;
 };
 
 const LanguagePicker: FC<LanguagePickerProps> = props => {
 	const [open, setOpen] = React.useState(false);
-	const [value, setValue] = React.useState('');
+	const [value, setValue] = React.useState('english');
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
@@ -55,8 +32,8 @@ const LanguagePicker: FC<LanguagePickerProps> = props => {
 					className="w-[200px] justify-between"
 				>
 					{value
-						? frameworks.find(framework => framework.value === value)?.label
-						: 'Select framework...'}
+						? languages.find(framework => framework.value === value)?.label
+						: 'Select language...'}
 					<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 				</Button>
 			</PopoverTrigger>
@@ -65,11 +42,12 @@ const LanguagePicker: FC<LanguagePickerProps> = props => {
 					<CommandInput placeholder="Search framework..." />
 					<CommandEmpty>No framework found.</CommandEmpty>
 					<CommandGroup>
-						{frameworks.map(framework => (
+						{languages.map(framework => (
 							<CommandItem
 								key={framework.value}
 								onSelect={currentValue => {
 									setValue(currentValue === value ? '' : currentValue);
+									props.onChange(currentValue);
 									setOpen(false);
 								}}
 							>
