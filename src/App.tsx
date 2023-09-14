@@ -13,6 +13,7 @@ function App() {
 	const [languageState, setLanguageState] = useState<string>('english');
 	const [buttonState, setButtonState] = useState<'default' | 'copied'>('default');
 	const [uriState, setUriState] = useState<string>('localhost:8765');
+	const [jsonState, setJsonState] = useState<string>('');
 
 	const prompt = useMemo(() => {
 		console.log('prompt memo');
@@ -27,6 +28,24 @@ function App() {
 			setButtonState('default');
 		}, 2000);
 	};
+
+	useMemo(() => {
+		if (jsonState.length > 0) convertJsonToBasicCards(jsonState);
+	}, [jsonState]);
+
+	function convertJsonToBasicCards(json: string): BasicCard[] {
+		const data = JSON.parse(json);
+		const cards: BasicCard[] = data.map((item: any) => {
+			return {
+				front: item.front,
+				back: item.back,
+			};
+		});
+
+		console.log(cards);
+
+		return cards;
+	}
 
 	//TODO: SETUP A WAY FOR THE USER TO COPY THE PROMPT FOR CHAT GPT
 	//TODO: ADD ANOTHER TEXTAREA FOR THE USER TO PASTE THE GPT OUTPUT INTO
@@ -64,6 +83,16 @@ function App() {
 							value={uriState}
 							onChange={v => setUriState(v.target.value)}
 						/>
+						<Label htmlFor="jsonField" className="place-self-start">
+							Source for flashcards
+						</Label>
+						<Textarea
+							value={jsonState}
+							id="jsonField"
+							onChange={v => setJsonState(v.target.value)}
+							className="w-full min-h-[200px] max-h-[600px] resize overflow-auto"
+							placeholder="Add flashcard content here"
+						/>
 					</div>
 					{/* <p>{prompt}</p> */}
 				</Card>
@@ -80,9 +109,14 @@ const lorem =
 function promptIntro(language: string = 'english') {
 	return `You are a professional making flashcards from given text for educational purposes for schools, universities, professional trainings.
 	Create as many flash cards as needed following these rules:
-	
+
 	- No duplicate cards!
 	- Only provide the json for the flashcards, do not say anything else in the text, the text will be ignored.
+	- The format should be as follows:
+	{
+		"front: "The question",
+		"back": "The answer"
+	}
 	- questions should have all the context necessary for answering it, (not "What was this period called?" but instead "What was the name of the period between 1939 and 1945?") because the flash cards will have no other context than the question.
 	- Answers should be fairly concise. This also means that you shoul avoid repeating a part of the question in the answer!
 	- Make global questions about the text when it makes sense
