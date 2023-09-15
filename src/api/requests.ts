@@ -1,4 +1,6 @@
-export async function addNotes(uri: string, deckName: string, cards: BasicCard[]) {
+import { isCardsCreatedResult } from '@/utils/helperFunctions';
+
+export async function addNotes(uri: string | null, deckName: string, cards: BasicCard[]) {
 	const notes = cards.map(card => {
 		return {
 			deckName: deckName,
@@ -19,7 +21,7 @@ export async function addNotes(uri: string, deckName: string, cards: BasicCard[]
 	};
 
 	try {
-		const response = await fetch(uri, {
+		const response = await fetch(`http://${uri ? uri : 'localhost:8765'}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -27,8 +29,27 @@ export async function addNotes(uri: string, deckName: string, cards: BasicCard[]
 			body: JSON.stringify(data),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		if (isCardsCreatedResult(responseData)) {
+			return true;
+		} else {
+			console.log('error:', responseData);
+			return false;
+		}
 	} catch (error) {
 		console.error(error);
+		return error;
+	}
+}
+
+function interpretResult(result: number[] | null[]) {
+	let cardsCreated: number = 0;
+	result.forEach(element => {
+		if (element !== null) {
+			cardsCreated++;
+		}
+	});
+
+	if (cardsCreated !== result.length) {
+		console.error('Not all cards were created');
 	}
 }

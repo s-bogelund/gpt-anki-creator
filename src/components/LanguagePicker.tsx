@@ -16,6 +16,7 @@ const languages = languageList.sort((a, b) => a.value.localeCompare(b.value));
 
 type LanguagePickerProps = {
 	onChange: (language: string) => void;
+	className?: string;
 };
 
 const LanguagePicker: FC<LanguagePickerProps> = props => {
@@ -26,10 +27,11 @@ const LanguagePicker: FC<LanguagePickerProps> = props => {
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<Button
+					id="language-picker"
 					variant="outline"
 					role="combobox"
 					aria-expanded={open}
-					className="w-[200px] justify-between"
+					className={`w-[200px] justify-between ${props.className}`}
 				>
 					{value
 						? languages.find(framework => framework.value === value)?.label
