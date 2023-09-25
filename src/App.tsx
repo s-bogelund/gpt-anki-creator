@@ -6,7 +6,6 @@ import { Textarea } from './components/ui/textarea';
 import { Label } from './components/ui/label';
 import LanguagePicker from './components/LanguagePicker';
 import { Button } from './components/ui/button';
-import { dummyInfo } from './utils/dummyData';
 import { promptIntro } from './utils/helperFunctions';
 import { addNotes } from './api/requests';
 import { useToast } from './components/ui/use-toast';
