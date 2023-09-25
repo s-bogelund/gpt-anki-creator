@@ -9,8 +9,10 @@ export function promptIntro(language: string = 'english') {
 		"front: "The question",
 		"back": "The answer"
 	}
+	- It should be an array of objects in the above format
 	- questions should have all the context necessary for answering it, (not "What was this period called?" but instead "What was the name of the period between 1939 and 1945?") because the flash cards will have no other context than the question.
-	- Answers should be fairly concise. This also means that you shoul avoid repeating a part of the question in the answer!
+	- Answers should be fairly concise - max 15 words but preferably less
+	- You should avoid repeating a part of the question in the answer!
 	- Make global questions about the text when it makes sense
 	- Don't invent anything, only use the text provided
 	- Write in ${language}

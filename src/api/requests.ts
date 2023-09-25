@@ -41,15 +41,15 @@ export async function addNotes(uri: string | null, deckName: string, cards: Basi
 	}
 }
 
-function interpretResult(result: number[] | null[]) {
-	let cardsCreated: number = 0;
-	result.forEach(element => {
-		if (element !== null) {
-			cardsCreated++;
-		}
-	});
+// function interpretResult(result: number[] | null[]) {
+// 	let cardsCreated: number = 0;
+// 	result.forEach(element => {
+// 		if (element !== null) {
+// 			cardsCreated++;
+// 		}
+// 	});
 
-	if (cardsCreated !== result.length) {
-		console.error('Not all cards were created');
-	}
-}
+// 	if (cardsCreated !== result.length) {
+// 		console.error('Not all cards were created');
+// 	}
+// }

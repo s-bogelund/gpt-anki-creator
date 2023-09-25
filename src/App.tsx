@@ -62,6 +62,8 @@ function App() {
 
 	const generateCards = async () => {
 		const cards = convertJsonToBasicCards(jsonState);
+		if (!cards) return;
+
 		const success = await addNotes(uriState, deckNameState, cards);
 
 		if (success) {
@@ -80,11 +82,6 @@ function App() {
 			});
 		}
 	};
-
-	//TODO: SETUP A WAY FOR THE USER TO COPY THE PROMPT FOR CHAT GPT
-	//TODO: ADD ANOTHER TEXTAREA FOR THE USER TO PASTE THE GPT OUTPUT INTO
-	//TODO: ADD A BUTTON TO GENERATE THE FLASHCARDS FROM THE GPT OUTPUT VIA POST - REMEMBER TOAST FOR FEEDBACK
-	//TODO: ADD A WAY TO CHANGE THE URI BUT HAVE localhost:8765 AS THE DEFAULT WITH AN EXPLANATION AS TO WHY
 
 	return (
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -171,6 +168,3 @@ function App() {
 }
 
 export default App;
-
-const lorem =
-	"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
