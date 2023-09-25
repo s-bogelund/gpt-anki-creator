@@ -13,7 +13,7 @@ import { useToast } from './components/ui/use-toast';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
-	const [cardSourceState, setCardSourceState] = useState<string>(dummyInfo);
+	const [cardSourceState, setCardSourceState] = useState<string>('');
 	const [languageState, setLanguageState] = useState<string>('english');
 	const [buttonState, setButtonState] = useState<'default' | 'copied'>('default');
 	const [uriState, setUriState] = useState<string | null>(null);
