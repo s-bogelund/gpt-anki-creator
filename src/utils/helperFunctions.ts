@@ -16,8 +16,9 @@ export function promptIntro(language: string = 'english') {
 	- Make global questions about the text when it makes sense
 	- Don't invent anything, only use the text provided
 	- Write in ${language}
-
-	If there's any text below this, you should create flashcards from it.
+	- Simplify questions; avoid "describe the nature of..." and use "What is..." etc.
+	- Invert questions to use specific examples when present in the text.
+	- If there's any text below this, you should create flashcards from it.
 
 	`;
 }
