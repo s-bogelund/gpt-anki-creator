@@ -17,7 +17,8 @@ export function promptIntro(language: string = 'english') {
 	- Don't invent anything, only use the text provided
 	- Write in ${language}
 	- Simplify questions; avoid "describe the nature of..." and use "What is..." etc.
-	- Invert questions to use specific examples when present in the text.
+	- If there are specific examples in the text, never ask for the example in the question. For instance, if the text mentions a fox as an example of a mammal, make the question something like "What type of animal is a fox"? or "True or false: A fox is a mammal" (not both).
+	- Answers should never be an example of a thing/concept. In case of an example mentioned in a text, the question should be in the following style ("front": "What type of animal is a fox?", "back": "A mammal")
 	- If there's any text below this, you should create flashcards from it.
 
 	`;
